@@ -1,4 +1,4 @@
-export default function gt(op) {
+export function gt(op) {
     if (typeof op.$gt == "number") {
         return `> ${op.$gt}`;
     }

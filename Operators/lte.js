@@ -1,4 +1,4 @@
-export default function lte(op) {
+export function lte(op) {
     if (typeof op.$lte == "number") {
         return `<= ${op.$lte}`;
     }

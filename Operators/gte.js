@@ -1,4 +1,4 @@
-export default function gte(op) {
+export function gte(op) {
     if (typeof op.$gte == "number") {
         return `>= ${op.$gte}`;
     }

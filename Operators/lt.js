@@ -1,4 +1,4 @@
-export default function lt(op) {
+export function lt(op) {
     if (typeof op.$lt == "number") {
         return `< ${op.$lt}`;
     }
