@@ -1,25 +1,33 @@
+import { comparisonOperations } from "./comparisonExp.js";
+
 export const booleanOperations = {
-    /*
-    명칭: $and
-    설명: 모든 표현식이 true로 평가될 때 true를 반환합니다.
-    */
     $and: (operands) => {
-        return "Boolean";
+        return operands
+            .map((operand) => processCondition(operand))
+            .join(" AND ");
     },
 
-    /*
-    명칭: $not
-    설명: 주어진 표현식의 반대 boolean 값을 반환합니다.
-    */
-    $not: (operand) => {
-        return "Boolean";
-    },
-
-    /*
-    명칭: $or
-    설명: 주어진 표현식 중 하나라도 true로 평가되면 true를 반환합니다.
-    */
     $or: (operands) => {
-        return "Boolean";
+        return operands
+            .map((operand) => processCondition(operand))
+            .join(" OR ");
+    },
+
+    $not: (operand) => {
+        let result = processCondition(operand);
+        return `NOT (${result})`;
     },
 };
+
+function processCondition(condition) {
+    // 조건을 문자열로 변환
+    let keys = Object.keys(condition);
+    let results = keys.map((key) => {
+        if (comparisonOperations[key]) {
+            let value = condition[key];
+            return comparisonOperations[key](value);
+        }
+        return `${key} UNDEFINED`;
+    });
+    return results.join(" ");
+}

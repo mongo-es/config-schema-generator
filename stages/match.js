@@ -58,7 +58,7 @@ function processEachCriteria(criteria) {
  * @param {Object} stage - MongoDB 스타일의 쿼리 스테이지 객체
  * @returns {Object} - ConfigSchema 형태의 처리된 결과 객체, 단순조건과 연산조건을 포함
  */
-function match(stage) {
+export default function $match(stage) {
     if (!stage[MATCH_KEY]) {
         return {};
     }
@@ -70,16 +70,3 @@ function match(stage) {
         processOperationConditions(operationConditions);
     return { ...simpleConditions, ...processedOperationConditions };
 }
-
-// 사용 예
-const match1 = {
-    $match: { status: "A", age: 12 },
-};
-const match2 = {
-    $match: {
-        quantity: { $gt: 20, $lt: ["pyt", 50] },
-    },
-};
-
-console.log(match(match1));
-console.log(match(match2));
