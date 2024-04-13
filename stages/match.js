@@ -1,11 +1,10 @@
-import { op, dict } from "../operators/op.js";
-import { isNull, isObject } from "../utils/utils.js";
+import { isObject } from "../utils/utils.js";
+import { operate } from "../operators/operation.js";
 
-// 상수 정의
 const MATCH_KEY = "$match";
 
 /**
- * 조건 분리 함수: Mongo 스테이지 조건에서 단순조건과 연산조건을 분리한다,
+ * 조건 분리 함수: Mongo 스테이지 조건에서 단순조건과 연산조건을 분리한다.
  * @param {Object} mongoStageCondition - MongoDB 스타일의 match 조건 객체
  * @returns {Object} - 단순조건과 연산조건을 포함하는 객체
  */
@@ -13,13 +12,13 @@ function extractConditions(mongoStageCondition) {
     const simpleConditions = {};
     const operationConditions = {};
 
-    Object.entries(mongoStageCondition).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(mongoStageCondition)) {
         if (isObject(value)) {
             operationConditions[key] = value;
-        } else {
-            simpleConditions[key] = value;
+            continue;
         }
-    });
+        simpleConditions[key] = value;
+    }
 
     return { simpleConditions, operationConditions };
 }
@@ -31,12 +30,12 @@ function extractConditions(mongoStageCondition) {
  */
 function processOperationConditions(operationConditions) {
     const results = {};
-    Object.entries(operationConditions).forEach(([field, criteria]) => {
+    for (const [field, criteria] of Object.entries(operationConditions)) {
         const result = processEachCriteria(criteria);
         if (result) {
             results[field] = result;
         }
-    });
+    }
     return results;
 }
 
@@ -48,12 +47,7 @@ function processOperationConditions(operationConditions) {
 function processEachCriteria(criteria) {
     return Object.entries(criteria)
         .map(([operator, value]) => {
-            const operationName = dict[operator];
-            if (operationName) {
-                const operation = op(operationName);
-                return operation && operation({ [operator]: value });
-            }
-            return undefined;
+            return operate(operator, value);
         })
         .filter(Boolean)
         .join(" AND ");
@@ -74,9 +68,7 @@ function match(stage) {
     );
     const processedOperationConditions =
         processOperationConditions(operationConditions);
-    const result = { ...simpleConditions, ...processedOperationConditions };
-
-    return result;
+    return { ...simpleConditions, ...processedOperationConditions };
 }
 
 // 사용 예
@@ -85,7 +77,7 @@ const match1 = {
 };
 const match2 = {
     $match: {
-        quantity: { $gt: 20, $lt: 50 },
+        quantity: { $gt: 20, $lt: ["pyt", 50] },
     },
 };
 
