@@ -58,9 +58,9 @@ function processEachCriteria(criteria) {
  * @param {Object} stage - MongoDB 스타일의 쿼리 스테이지 객체
  * @returns {Object} - ConfigSchema 형태의 처리된 결과 객체, 단순조건과 연산조건을 포함
  */
-export default function $match(stage) {
+export default function $match(stage, configSchema) {
     if (!stage[MATCH_KEY]) {
-        return {};
+        return configSchema;
     }
 
     const { simpleConditions, operationConditions } = extractConditions(
@@ -68,5 +68,11 @@ export default function $match(stage) {
     );
     const processedOperationConditions =
         processOperationConditions(operationConditions);
-    return { ...simpleConditions, ...processedOperationConditions };
+
+    const result = Object.assign(
+        configSchema,
+        simpleConditions,
+        processedOperationConditions
+    );
+    return result;
 }
