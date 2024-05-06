@@ -3,13 +3,15 @@ import $project from "./project.js";
 import $group from "./group.js";
 import $count from "./count.js";
 import $lookup from "./lookup.js";
+import $unwind from "./unwind.js";
 
 const stageOperations = {
     $match,
     $project,
     $group,
     $count,
-    $lookup
+    $lookup,
+    $unwind,
 };
 
 function processStage(pipeline) {
