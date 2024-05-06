@@ -2,12 +2,14 @@ import $match from "./match.js";
 import $project from "./project.js";
 import $group from "./group.js";
 import $count from "./count.js";
+import $lookup from "./lookup.js";
 
 const stageOperations = {
     $match,
     $project,
     $group,
     $count,
+    $lookup
 };
 
 function processStage(pipeline) {
