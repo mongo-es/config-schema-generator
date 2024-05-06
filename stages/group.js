@@ -25,7 +25,7 @@ function processProjectFields(projectFields, configSchema) {
     return newConfigSchema;
 }
 
-export default function $project(stage, configSchema) {
+export default function $group(stage, configSchema) {
     if (!stage[MATCH_KEY]) {
         return configSchema;
     }
