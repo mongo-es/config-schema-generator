@@ -7,10 +7,10 @@ function isContained(key, schema) {
     return key in schema;
 }
 
-function processProjectFields(projectFields, configSchema) {
+function processGroup(groupFields, configSchema) {
     const newConfigSchema = {};
 
-    for (const [key, value] of Object.entries(projectFields)) {
+    for (const [key, value] of Object.entries(groupFields)) {
         if (isObject(value)) {
             let result = "";
             for (const [op, field] of Object.entries(value)) {
@@ -30,6 +30,6 @@ export default function $group(stage, configSchema) {
         return configSchema;
     }
 
-    const projectFields = stage[MATCH_KEY];
-    return processProjectFields(projectFields, configSchema);
+    const groupFields = stage[MATCH_KEY];
+    return processGroup(groupFields, configSchema);
 }

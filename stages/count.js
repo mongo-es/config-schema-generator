@@ -2,10 +2,10 @@ import { operate } from "../operators/operation.js";
 
 const MATCH_KEY = "$count";
 
-function processProjectFields(projectFields, configSchema) {
+function processCount(countFields, configSchema) {
     const newConfigSchema = {};
 
-    newConfigSchema[projectFields] = "COUNT(*)";
+    newConfigSchema[countFields] = "COUNT(*)";
 
     return newConfigSchema;
 }
@@ -15,8 +15,8 @@ export default function $count(stage, configSchema) {
         return configSchema;
     }
 
-    const projectFields = stage[MATCH_KEY];
-    return processProjectFields(projectFields, configSchema);
+    const countFields = stage[MATCH_KEY];
+    return processCount(countFields, configSchema);
 }
 
 /*
