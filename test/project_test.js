@@ -1,6 +1,6 @@
 import { processStage } from "../stages/stages.js";
 
-const mocks = [
+export const mocks = [
     [{ $project: { _id: 1, name: 1, "orders.amount": 1 } }],
     [{ $project: { _id: 1, name: 1, "orders.amount": 1 } }],
     [{ $project: { _id: 1, name: 0, "orders.amount": 1 } }],

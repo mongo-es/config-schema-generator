@@ -1,6 +1,6 @@
 import { processStage } from "../stages/stages.js";
 
-const mocks = [
+export const mocks = [
     [
         {
             $lookup: {
