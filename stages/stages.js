@@ -1,11 +1,13 @@
 import $match from "./match.js";
 import $project from "./project.js";
 import $group from "./group.js";
+import $count from "./count.js";
 
 const stageOperations = {
     $match,
     $project,
     $group,
+    $count,
 };
 
 function processStage(pipeline) {
