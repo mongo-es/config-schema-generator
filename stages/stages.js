@@ -22,11 +22,12 @@ function processStage(pipeline) {
             throw new Error(`Unknown stage: ${stage}`);
         }
         configSchema = stageOperations[stage](step, configSchema);
-        console.log(`stage: ${stage}`);
-        console.log(configSchema);
+        // console.log(`stage: ${stage}`);
+        //console.log(configSchema);
     }
-    console.log("result =>");
-    console.log(configSchema);
+    //console.log("result =>");
+    //console.log(configSchema);
+    return configSchema;
 }
 
 export { processStage };

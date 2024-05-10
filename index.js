@@ -1,7 +1,5 @@
 import { processStage } from "./stages/stages.js";
 
-export default processStage([
-    {
-        $count: "passing_scores",
-    },
-]);
+export function generateConfigSchema(pipeline) {
+    return processStage(pipeline);
+}
