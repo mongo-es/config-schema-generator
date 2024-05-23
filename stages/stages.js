@@ -4,6 +4,7 @@ import $group from "./group.js";
 import $count from "./count.js";
 import $lookup from "./lookup.js";
 import $unwind from "./unwind.js";
+import $limit from "./limit.js";
 
 const stageOperations = {
     $match,
@@ -12,6 +13,7 @@ const stageOperations = {
     $count,
     $lookup,
     $unwind,
+    $limit
 };
 
 function processStage(pipeline) {

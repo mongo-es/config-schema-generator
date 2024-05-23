@@ -5,7 +5,8 @@ const MATCH_KEY = "$count";
 function processCount(countFields, configSchema) {
     const newConfigSchema = {};
 
-    newConfigSchema[countFields] = "COUNT(*)";
+    //newConfigSchema[countFields] = "COUNT(*)";
+    newConfigSchema[countFields] = { bsonType: ["int"] };
 
     return newConfigSchema;
 }
