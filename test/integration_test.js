@@ -1,4 +1,4 @@
-import { processStage } from "../stages/stages.js";
+import { processStage, processStageByStep } from "../stages/stages.js";
 
 //const mocks = [];
 const mocks = [
@@ -10,7 +10,7 @@ const mocks = [
     [{ $match: { _id: "10", name: "Min" } }, { $project: { _id: 1, name: 1 } }],
 
     [{ $match: { _id: "11", name: "Min" } }, { $project: { _id: 1, name: 0 } }],
-    
+
     [
         { $match: { _id: "12", "orders.amount": { $gte: 60, $lte: 160 } } },
         { $project: { _id: 1, "orders.amount": 100 } },
@@ -19,4 +19,5 @@ const mocks = [
 
 for (const mock of mocks) {
     processStage(mock);
+    console.log(processStageByStep(mock));
 }

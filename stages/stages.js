@@ -13,10 +13,25 @@ const stageOperations = {
     $count,
     $lookup,
     $unwind,
-    $limit
+    $limit,
 };
 
-function processStage(pipeline) {
+export const processStage = (pipeline) => {
+    let configSchema = {};
+    for (const step of pipeline) {
+        const [stage, data] = Object.entries(step)[0];
+        //console.log(stage);
+        if (!stageOperations[stage]) {
+            throw new Error(`Unknown stage: ${stage}`);
+        }
+        configSchema = stageOperations[stage](step, configSchema);
+    }
+    //console.log(configSchema);
+    return configSchema;
+};
+
+export const processStageByStep = (pipeline) => {
+    const configSchemaSteps = [];
     let configSchema = {};
     for (const step of pipeline) {
         const [stage, data] = Object.entries(step)[0];
@@ -24,12 +39,9 @@ function processStage(pipeline) {
             throw new Error(`Unknown stage: ${stage}`);
         }
         configSchema = stageOperations[stage](step, configSchema);
-        // console.log(`stage: ${stage}`);
-        //console.log(configSchema);
+        const a = {};
+        a[stage] = configSchema;
+        configSchemaSteps.push(a);
     }
-    //console.log("result =>");
-    //console.log(configSchema);
-    return configSchema;
-}
-
-export { processStage };
+    return configSchemaSteps;
+};
