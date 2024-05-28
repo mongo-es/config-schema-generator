@@ -1,6 +1,6 @@
 {
     "name": "@coffee-tree/config-schema-generator",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "몽고 파이프라인 분석해서 스키마 만들기",
     "main": "index.js",
     "scripts": {
